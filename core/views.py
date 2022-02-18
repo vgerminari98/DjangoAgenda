@@ -34,3 +34,22 @@ def listaEventos(request):
 def logout_user(request):
     logout(request)
     return redirect('/')
+
+@login_required(login_url='login/')
+def evento(request):
+    return render(request, 'evento.html')
+
+@login_required(login_url='login/')
+def submit_evento(request):
+    if request.POST:
+        titulo = request.POST.get('titulo')
+        data_evnto = request.POST.get('data_evnto')
+        descricao = request.POST.get('descricao')
+        usuario = request.user
+        Evento.objects.create(titulo=titulo,
+                              data_evento=data_evnto,
+                              descricao=descricao,
+                              usuario=usuario)
+
+       
+    return redirect('/')
